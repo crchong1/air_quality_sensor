@@ -1,7 +1,6 @@
 import pymongo
 import csv
 import pandas as pd 
-import numpy as np 
 
 
 # Connect to the MongoDB database we have in the cloud
