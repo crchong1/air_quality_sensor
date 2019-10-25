@@ -22,24 +22,24 @@ class MQ():
                                             # normal operation
  
     ######################### Application Related Macros ######################
-    GAS_LPG                      = 0
+    GAS_CO2                      = 0
     GAS_CO                       = 1
-    GAS_SMOKE                    = 2
+    GAS_ALC                      = 2
 
     def __init__(self, Ro=10, analogPin=0):
         self.Ro = Ro
         self.MQ_PIN = analogPin
         self.adc = MCP3008()
         
-        self.LPGCurve = [2.3,0.21,-0.47]    # two points are taken from the curve. 
+        self.CO2Curve = [1,0.36,-0.3749]    # two points are taken from the curve. 
                                             # with these two points, a line is formed which is "approximately equivalent"
                                             # to the original curve. 
                                             # data format:{ x, y, slope}; point1: (lg200, 0.21), point2: (lg10000, -0.59) 
-        self.COCurve = [2.3,0.72,-0.34]     # two points are taken from the curve. 
+        self.COCurve = [1,0.4624,-0.20928]     # two points are taken from the curve. 
                                             # with these two points, a line is formed which is "approximately equivalent" 
                                             # to the original curve.
                                             # data format:[ x, y, slope]; point1: (lg200, 0.72), point2: (lg10000,  0.15)
-        self.SmokeCurve =[2.3,0.53,-0.44]   # two points are taken from the curve. 
+        self.AlcCurve =[1,0.2788,-0.35692]   # two points are taken from the curve. 
                                             # with these two points, a line is formed which is "approximately equivalent" 
                                             # to the original curve.
                                             # data format:[ x, y, slope]; point1: (lg200, 0.53), point2: (lg10000,  -0.22)  
@@ -53,9 +53,9 @@ class MQ():
     def MQPercentage(self):
         val = {}
         read = self.MQRead(self.MQ_PIN)
-        val["GAS_LPG"]  = self.MQGetGasPercentage(read/self.Ro, self.GAS_LPG)
+        val["CO2"]  = self.MQGetGasPercentage(read/self.Ro, self.GAS_CO2)
         val["CO"]       = self.MQGetGasPercentage(read/self.Ro, self.GAS_CO)
-        val["SMOKE"]    = self.MQGetGasPercentage(read/self.Ro, self.GAS_SMOKE)
+        val["ALC"]    = self.MQGetGasPercentage(read/self.Ro, self.GAS_ALC)
         return val
         
     ######################### MQResistanceCalculation #########################
@@ -118,12 +118,12 @@ class MQ():
     #          calculates the ppm (parts per million) of the target gas.
     ############################################################################ 
     def MQGetGasPercentage(self, rs_ro_ratio, gas_id):
-        if ( gas_id == self.GAS_LPG ):
-            return self.MQGetPercentage(rs_ro_ratio, self.LPGCurve)
+        if ( gas_id == self.GAS_CO2 ):
+            return self.MQGetPercentage(rs_ro_ratio, self.CO2Curve)
         elif ( gas_id == self.GAS_CO ):
             return self.MQGetPercentage(rs_ro_ratio, self.COCurve)
-        elif ( gas_id == self.GAS_SMOKE ):
-            return self.MQGetPercentage(rs_ro_ratio, self.SmokeCurve)
+        elif ( gas_id == self.GAS_ALC ):
+            return self.MQGetPercentage(rs_ro_ratio, self.ALCCurve)
         return 0
      
     #########################  MQGetPercentage #################################
