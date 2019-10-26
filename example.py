@@ -9,7 +9,7 @@ try:
         perc = mq.MQPercentage()
         sys.stdout.write("\r")
         sys.stdout.write("\033[K")
-        sys.stdout.write("LPG: %g ppm, CO: %g ppm, Smoke: %g ppm" % (perc["GAS_LPG"], perc["CO"], perc["SMOKE"]))
+        sys.stdout.write("CO2: %g ppm, CO: %g ppm, Alcohol: %g ppm" % (perc["CO2"], perc["CO"], perc["ALC"]))
         sys.stdout.flush()
         time.sleep(0.1)
 
