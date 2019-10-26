@@ -39,7 +39,7 @@ class MQ():
                                             # with these two points, a line is formed which is "approximately equivalent" 
                                             # to the original curve.
                                             # data format:[ x, y, slope]; point1: (lg200, 0.72), point2: (lg10000,  0.15)
-        self.AlcCurve =[1,0.2788,-0.35692]   # two points are taken from the curve. 
+        self.ALCCurve =[1,0.2788,-0.35692]   # two points are taken from the curve. 
                                             # with these two points, a line is formed which is "approximately equivalent" 
                                             # to the original curve.
                                             # data format:[ x, y, slope]; point1: (lg200, 0.53), point2: (lg10000,  -0.22)  
